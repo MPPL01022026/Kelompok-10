@@ -1,6 +1,6 @@
 <<<<<<< HEAD
 # Kelompok-10
-# 📦 Sistem Informasi Warehouse UMKM Kios Iqbal
+# 📦 Sistem Informasi Warehouse UMKM
 
 Sistem Informasi Warehouse UMKM merupakan aplikasi berbasis website yang dirancang untuk membantu UMKM dalam mengelola **data barang, stok, transaksi penjualan, dan laporan penjualan** secara lebih terstruktur.
 
