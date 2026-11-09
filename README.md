@@ -182,7 +182,7 @@ http://localhost/warehouse-umkm/
 
 ## 📊 Dashboard
 
-Dashboard admin digunakan untuk menampilkan informasi penting seperti:
+Dashboard Admin digunakan untuk menampilkan informasi penting seperti:
 
 - Jumlah produk.
 - Jumlah stok.
