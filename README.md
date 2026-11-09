@@ -4,7 +4,7 @@
 
 Sistem Informasi Warehouse UMKM merupakan aplikasi berbasis website yang dirancang untuk membantu UMKM dalam mengelola **data barang, stok, transaksi penjualan, dan laporan penjualan** secara lebih terstruktur.
 
-Sistem ini juga menyediakan **dashboard admin** yang dilengkapi dengan statistik dan grafik riwayat penjualan sehingga pemilik UMKM dapat lebih mudah memantau perkembangan dan menganalisis kondisi bisnis.
+Sistem ini juga menyediakan **Dashboard Admin** yang dilengkapi dengan statistik dan grafik riwayat penjualan sehingga pemilik UMKM dapat lebih mudah memantau perkembangan dan menganalisis kondisi bisnis.
 
 ---
 
@@ -82,7 +82,7 @@ Database sistem menggunakan **MySQL** untuk menyimpan data yang berkaitan dengan
 
 Beberapa data utama yang digunakan antara lain:
 
-- **Produk** — menyimpan informasi barang dan stok.
+- **Produk** — Menyimpan informasi barang dan stok.
 - **Transaksi** — menyimpan riwayat transaksi penjualan.
 - **Admin** — menyimpan data pengguna yang memiliki akses untuk mengelola sistem.
 
@@ -182,7 +182,7 @@ http://localhost/warehouse-umkm/
 
 ## 📊 Dashboard
 
-Dashboard admin digunakan untuk menampilkan informasi penting seperti:
+Dashboard Admin digunakan untuk menampilkan informasi penting seperti:
 
 - Jumlah produk.
 - Jumlah stok.
@@ -240,7 +240,7 @@ Beberapa fitur yang diuji meliputi:
 - Pencatatan transaksi.
 - Perhitungan dan rekap penjualan.
 - Tampilan grafik statistik.
-- Koneksi database.
+- Koneksi Database.
 
 ---
 
