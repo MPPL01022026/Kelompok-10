@@ -240,7 +240,7 @@ Beberapa fitur yang diuji meliputi:
 - Pencatatan transaksi.
 - Perhitungan dan rekap penjualan.
 - Tampilan grafik statistik.
-- Koneksi database.
+- Koneksi Database.
 
 ---
 
