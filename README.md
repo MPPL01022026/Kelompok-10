@@ -138,7 +138,7 @@ Jika menggunakan **XAMPP**, letakkan folder project di:
 C:/xampp/htdocs/
 ```
 
-Kemudian jalankan:
+Kemudian Jalankan:
 
 - Apache
 - MySQL
