@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+<<<<< HEAD
 # Kelompok-10
 # 📦 Sistem Informasi Warehouse UMKM
 
@@ -132,13 +132,13 @@ cd warehouse-umkm
 
 ### 3. Jalankan Web Server
 
-Jika menggunakan **XAMPP**, letakkan folder project di:
+Jika menggunakan **XAMPP**, Letakkan folder project di:
 
 ```text
 C:/xampp/htdocs/
 ```
 
-Kemudian jalankan:
+Kemudian Jalankan:
 
 - Apache
 - MySQL
