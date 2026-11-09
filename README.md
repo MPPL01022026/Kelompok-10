@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+<<<<< HEAD
 # Kelompok-10
 # 📦 Sistem Informasi Warehouse UMKM
 
