@@ -4,7 +4,7 @@
 
 Sistem Informasi Warehouse UMKM merupakan aplikasi berbasis website yang dirancang untuk membantu UMKM dalam mengelola **data barang, stok, transaksi penjualan, dan laporan penjualan** secara lebih terstruktur.
 
-Sistem ini juga menyediakan **Dashboard Admin** yang dilengkapi dengan statistik dan grafik riwayat penjualan sehingga pemilik UMKM dapat lebih mudah memantau perkembangan dan menganalisis kondisi bisnis.
+Sistem ini juga menyediakan **Dashboard Admin** yang dilengkapi dengan statistik dan grafik riwayat penjualan sehingga pemilik umkm dapat lebih mudah memantau perkembangan dan menganalisis kondisi bisnis.
 
 ---
 
