@@ -82,7 +82,7 @@ Database sistem menggunakan **MySQL** untuk menyimpan data yang berkaitan dengan
 
 Beberapa data utama yang digunakan antara lain:
 
-- **Produk** — menyimpan informasi barang dan stok.
+- **Produk** — Menyimpan informasi barang dan stok.
 - **Transaksi** — menyimpan riwayat transaksi penjualan.
 - **Admin** — menyimpan data pengguna yang memiliki akses untuk mengelola sistem.
 
