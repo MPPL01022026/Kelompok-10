@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   User,
   EnvelopeSimple,
@@ -13,7 +13,9 @@ import {
   DeviceMobile,
   Check,
   WarningCircle,
-  Camera
+  Camera,
+  UploadSimple,
+  Trash
 } from '@phosphor-icons/react';
 
 const INITIAL_PROFILE = {
@@ -24,8 +26,7 @@ const INITIAL_PROFILE = {
   role: 'Super Admin / Warehouse Manager',
   division: 'Operasional Gudang & Kasir',
   joinedDate: '12 Januari 2025',
-  bio: 'Bertanggung jawab atas pengelolaan stok inventaris, pengawasan transaksi masuk/keluar, dan laporan keuangan pergudangan UMKM.',
-  avatarUrl: null
+  bio: 'Bertanggung jawab atas pengelolaan stok inventaris, pengawasan transaksi masuk/keluar, dan laporan keuangan pergudangan UMKM.'
 };
 
 const LOGIN_HISTORY = [
@@ -40,6 +41,25 @@ const Profil = () => {
   const [profile, setProfile] = useState(INITIAL_PROFILE);
   const [formData, setFormData] = useState({ ...INITIAL_PROFILE });
   
+  // Foto Profil State (Persist di localStorage agar langsung muncul saat reload)
+  const [avatarUrl, setAvatarUrl] = useState(() => {
+    return localStorage.getItem('kios_admin_avatar') || null;
+  });
+  const fileInputRef = useRef(null);
+
+  // Sync avatar perubahan antar tab/komponen
+  useEffect(() => {
+    const syncAvatar = () => {
+      setAvatarUrl(localStorage.getItem('kios_admin_avatar') || null);
+    };
+    window.addEventListener('avatarUpdated', syncAvatar);
+    window.addEventListener('storage', syncAvatar);
+    return () => {
+      window.removeEventListener('avatarUpdated', syncAvatar);
+      window.removeEventListener('storage', syncAvatar);
+    };
+  }, []);
+
   // Password State
   const [passwords, setPasswords] = useState({
     currentPassword: '',
@@ -55,6 +75,50 @@ const Profil = () => {
     setTimeout(() => {
       setAlert(null);
     }, 4000);
+  };
+
+  // Fungsi Pilih & Unggah Foto Profil (Local Preview + LocalStorage + Siap kirim ke API)
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validasi tipe file
+    if (!file.type.startsWith('image/')) {
+      showAlert('error', 'File yang dipilih harus berupa file gambar (JPG, PNG, atau WebP).');
+      return;
+    }
+
+    // Validasi ukuran file (Maksimal 2MB)
+    const MAX_SIZE = 2 * 1024 * 1024;
+    if (file.size > MAX_SIZE) {
+      showAlert('error', 'Ukuran gambar terlalu besar. Maksimal ukuran file adalah 2 MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (uploadEvent) => {
+      const base64Data = uploadEvent.target.result;
+      setAvatarUrl(base64Data);
+      localStorage.setItem('kios_admin_avatar', base64Data);
+      // Trigger event agar Header otomatis mengupdate fotonya juga secara instan
+      window.dispatchEvent(new Event('avatarUpdated'));
+      showAlert('success', 'Foto profil berhasil diunggah dan diperbarui!');
+    };
+    reader.onerror = () => {
+      showAlert('error', 'Gagal memproses file foto.');
+    };
+    reader.readAsDataURL(file);
+
+    // Reset input agar bisa memilih file yang sama jika diinginkan
+    e.target.value = '';
+  };
+
+  // Fungsi Hapus Foto Profil (Kembali ke inisial huruf)
+  const handleRemoveAvatar = () => {
+    setAvatarUrl(null);
+    localStorage.removeItem('kios_admin_avatar');
+    window.dispatchEvent(new Event('avatarUpdated'));
+    showAlert('success', 'Foto profil berhasil dihapus. Kembali menggunakan inisial nama.');
   };
 
   const handleInfoChange = (e) => {
@@ -158,32 +222,61 @@ const Profil = () => {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+          {/* Input File Tersembunyi */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/png, image/jpeg, image/jpg, image/webp"
+            onChange={handleFileSelect}
+            style={{ display: 'none' }}
+          />
+
+          {/* Kotak Avatar + Tombol Kamera */}
           <div style={{ position: 'relative' }}>
             <div
+              onClick={() => fileInputRef.current?.click()}
+              title="Klik untuk memilih foto profil baru"
               style={{
-                width: '76px',
-                height: '76px',
-                borderRadius: '16px',
+                width: '80px',
+                height: '80px',
+                borderRadius: '18px',
                 backgroundColor: 'var(--primary)',
                 color: 'white',
-                fontSize: '28px',
+                fontSize: '30px',
                 fontWeight: '700',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 4px 14px rgba(14, 165, 233, 0.3)'
+                boxShadow: '0 4px 14px rgba(14, 165, 233, 0.25)',
+                overflow: 'hidden',
+                cursor: 'pointer',
+                border: '2px solid white'
               }}
             >
-              {profile.fullName.charAt(0)}
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt={profile.fullName}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              ) : (
+                profile.fullName.charAt(0)
+              )}
             </div>
+
             <button
-              title="Ubah Foto Profil"
+              type="button"
+              title="Pilih & Unggah Foto Profil"
+              onClick={(e) => {
+                e.stopPropagation();
+                fileInputRef.current?.click();
+              }}
               style={{
                 position: 'absolute',
                 bottom: '-4px',
                 right: '-4px',
-                width: '26px',
-                height: '26px',
+                width: '28px',
+                height: '28px',
                 borderRadius: '50%',
                 backgroundColor: '#0f172a',
                 color: 'white',
@@ -191,17 +284,70 @@ const Profil = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
               }}
-              onClick={() => showAlert('success', 'Fitur unggah avatar siap dihubungkan ke backend endpoint /api/profile/avatar')}
             >
               <Camera size={14} weight="bold" />
             </button>
           </div>
+
           <div>
-            <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#0f172a', marginBottom: '4px' }}>
-              {profile.fullName}
-            </h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '6px' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#0f172a' }}>
+                {profile.fullName}
+              </h3>
+              
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: '#f1f5f9',
+                  color: '#334155',
+                  border: '1px solid var(--border)',
+                  borderRadius: '6px',
+                  padding: '4px 12px',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: '0.2s'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#e2e8f0')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#f1f5f9')}
+              >
+                <UploadSimple size={14} weight="bold" /> Unggah Foto
+              </button>
+
+              {avatarUrl && (
+                <button
+                  type="button"
+                  onClick={handleRemoveAvatar}
+                  title="Hapus foto dan kembali ke inisial"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    background: '#fee2e2',
+                    color: '#dc2626',
+                    border: '1px solid #fecaca',
+                    borderRadius: '6px',
+                    padding: '4px 10px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: '0.2s'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#fca5a5')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#fee2e2')}
+                >
+                  <Trash size={14} weight="bold" /> Hapus Foto
+                </button>
+              )}
+            </div>
+
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', fontSize: '13px', color: 'var(--text-muted)' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <EnvelopeSimple size={16} /> {profile.email}
@@ -595,4 +741,3 @@ const Profil = () => {
 };
 
 export default Profil;
-

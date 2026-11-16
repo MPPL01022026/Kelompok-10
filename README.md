@@ -3,15 +3,15 @@
 
 Sistem Informasi Warehouse UMKM merupakan aplikasi berbasis website yang dirancang untuk membantu UMKM dalam mengelola **data barang, stok, transaksi penjualan, dan laporan penjualan** secara lebih terstruktur.
 
-Sistem ini juga menyediakan **Dashboard Admin** yang dilengkapi dengan statistik dan grafik riwayat penjualan sehingga pemilik UMKM dapat lebih mudah memantau perkembangan dan menganalisis kondisi bisnis.
-
+Sistem ini juga menyediakan **Dashboard Admin** yang dilengkapi dengan statistik dan grafik riwayat penjualan sehingga pemilik UMKM dapat lebih mudah memantau perkembangan dan menganalisis kondisi bisnis..
+ayam woiwijjjsajsas
 ---
 
 ## 🎯 Tujuan
 
 Sistem ini dibuat untuk:
 
-- Mempermudah pengelolaan data barang dan stok.
+- Mempermudah pengelolaan data barang dan stok.head repository, pilih FizamenKujo/Kelompok-10
 - Membantu pencatatan transaksi penjualan.
 - Menyediakan laporan penjualan secara terstruktur.
 - Menampilkan statistik penjualan dalam bentuk grafik.

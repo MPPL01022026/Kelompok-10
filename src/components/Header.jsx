@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MagnifyingGlass,
@@ -14,7 +14,21 @@ import {
 
 const Header = ({ onLogout }) => {
   const [showProfile, setShowProfile] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(() => localStorage.getItem('kios_admin_avatar') || null);
   const navigate = useNavigate();
+
+  // Sinkronisasi foto profil dari localStorage & custom event
+  useEffect(() => {
+    const syncAvatar = () => {
+      setAvatarUrl(localStorage.getItem('kios_admin_avatar') || null);
+    };
+    window.addEventListener('avatarUpdated', syncAvatar);
+    window.addEventListener('storage', syncAvatar);
+    return () => {
+      window.removeEventListener('avatarUpdated', syncAvatar);
+      window.removeEventListener('storage', syncAvatar);
+    };
+  }, []);
 
   return (
     <header className="header">
@@ -154,11 +168,19 @@ const Header = ({ onLogout }) => {
         />
         <div
           className="avatar"
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', overflow: 'hidden', padding: 0 }}
           title="Lihat Profil"
           onClick={() => navigate('/profile')}
         >
-          Z
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt="Avatar Admin"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          ) : (
+            'Z'
+          )}
         </div>
       </div>
     </header>
