@@ -9,6 +9,8 @@ import BarangMasukKeluar from './pages/BarangMasukKeluar';
 import LaporanTransaksi from './pages/LaporanTransaksi';
 import Login from './pages/Login';
 import Pembelian from './pages/Pembelian';
+import Profil from './pages/Profil';
+import Pengaturan from './pages/Pengaturan';
 
 // Mock Pages
 const PlaceholderPage = ({ title }) => (
@@ -47,6 +49,8 @@ function App() {
             <Route path="/integrations" element={<PlaceholderPage title="Modul Integrasi API" />} />
             <Route path="/reports" element={<LaporanTransaksi />} />
             <Route path="/documents" element={<PlaceholderPage title="Arsip Dokumen" />} />
+            <Route path="/profile" element={<Profil />} />
+            <Route path="/settings" element={<Pengaturan />} />
           </Routes>
         </main>
       </div>
